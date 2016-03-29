@@ -51,7 +51,7 @@
                     "typescriptreact"
                 ]
             },
-            "program": "./out/webkit/webkitDebug.js",
+            "program": "./out/src/iosDebug.js",
             "runtime": "node",
             "initialConfigurations": [{
                 "name": "Attach to an ios device",
