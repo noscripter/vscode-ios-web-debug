@@ -8,7 +8,7 @@ import {IOSDebugAdapter} from './iosDebugAdapter';
 export class IOSDebugSession extends WebKitDebugSession {
 
     public constructor(targetLinesStartAt1: boolean, isServer: boolean = false) {
-        let version = "IOS." + require('../../package.json').version;
+        let version = "iOS." + require('../../package.json').version;
         super(targetLinesStartAt1, isServer, new IOSDebugAdapter(), version);
     }
 }

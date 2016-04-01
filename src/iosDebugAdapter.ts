@@ -24,9 +24,9 @@ export class IOSDebugAdapter extends WebKitDebugAdapter {
         const proxyPath = args.proxyExecutable || iosUtils.getProxyPath();
         if (!proxyPath) {
             if (Utilities.getPlatform() != Utilities.Platform.Windows) {
-                return Utilities.errP(`No ios proxy was found. Install an ios proxy (https://github.com/google/ios-webkit-debug-proxy) and specify a valid 'proxyExecutable' path`);
+                return Utilities.errP(`No iOS proxy was found. Install an iOS proxy (https://github.com/google/ios-webkit-debug-proxy) and specify a valid 'proxyExecutable' path`);
             } else {
-                return Utilities.errP(`No ios proxy was found. Run 'npm install -g vs-libimobile' and specify a valid 'proxyExecutable' path`);
+                return Utilities.errP(`No iOS proxy was found. Run 'npm install -g vs-libimobile' and specify a valid 'proxyExecutable' path`);
             }
         }
 
