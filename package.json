@@ -54,7 +54,7 @@
             "program": "./out/src/iosDebug.js",
             "runtime": "node",
             "initialConfigurations": [{
-                "name": "Attach to an ios device",
+                "name": "Attach to an iOS device",
                 "type": "ios",
                 "request": "attach",
                 "port": 9222,
