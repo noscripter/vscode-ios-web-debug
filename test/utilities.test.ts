@@ -4,7 +4,7 @@
 
 import * as mockery from 'mockery';
 import * as assert from 'assert';
-import {Utilities} from 'debugger-for-chrome';
+import {Utils} from 'vscode-chrome-debug-core';
 
 /** Not mocked - use for type only */
 import * as _Utilities from '../src/utilities';
@@ -27,10 +27,10 @@ suite('Utilities', () => {
 
     suite('getProxyPath()', () => {
         test('if windows and path exists, returns correct path', () => {
-            mockery.registerMock('debugger-for-chrome', {
-                Utilities: {
+            mockery.registerMock('vscode-chrome-debug-core', {
+                Utils: {
                     Platform: { Windows: 0, OSX: 1, Linux: 2 },
-                    getPlatform: () => Utilities.Platform.Windows,
+                    getPlatform: () => Utils.Platform.Windows,
                     existsSync: () => true
                 }
             });
@@ -44,10 +44,10 @@ suite('Utilities', () => {
         });
 
         test('if windows and path not found, returns null', () => {
-            mockery.registerMock('debugger-for-chrome', {
-                Utilities: {
+            mockery.registerMock('vscode-chrome-debug-core', {
+                Utils: {
                     Platform: { Windows: 0, OSX: 1, Linux: 2 },
-                    getPlatform: () => Utilities.Platform.Windows,
+                    getPlatform: () => Utils.Platform.Windows,
                     existsSync: () => false
                 }
             });
@@ -61,10 +61,10 @@ suite('Utilities', () => {
         });
 
         test('if osx, returns null', () => {
-            mockery.registerMock('debugger-for-chrome', {
-                Utilities: {
+            mockery.registerMock('vscode-chrome-debug-core', {
+                Utils: {
                     Platform: { Windows: 0, OSX: 1, Linux: 2 },
-                    getPlatform: () => Utilities.Platform.OSX
+                    getPlatform: () => Utils.Platform.OSX
                 }
             });
             mockery.registerMock('path', {});
@@ -74,10 +74,10 @@ suite('Utilities', () => {
         });
 
         test('if linux, returns null', () => {
-            mockery.registerMock('debugger-for-chrome', {
-                Utilities: {
+            mockery.registerMock('vscode-chrome-debug-core', {
+                Utils: {
                     Platform: { Windows: 0, OSX: 1, Linux: 2 },
-                    getPlatform: () => Utilities.Platform.Linux
+                    getPlatform: () => Utils.Platform.Linux
                 }
             });
             mockery.registerMock('path', {});

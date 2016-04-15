@@ -2,7 +2,7 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
  
-import {WebKitDebugSession} from 'debugger-for-chrome';
+import {ChromeDebugSession} from 'vscode-chrome-debug-core';
 import {IOSDebugSession} from './iosDebugSession';
 
-WebKitDebugSession.run(IOSDebugSession);
+ChromeDebugSession.run(IOSDebugSession);

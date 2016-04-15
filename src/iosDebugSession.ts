@@ -2,10 +2,10 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
 
-import {WebKitDebugSession} from 'debugger-for-chrome';
+import {ChromeDebugSession} from 'vscode-chrome-debug-core';
 import {IOSDebugAdapter} from './iosDebugAdapter';
 
-export class IOSDebugSession extends WebKitDebugSession {
+export class IOSDebugSession extends ChromeDebugSession {
 
     public constructor(targetLinesStartAt1: boolean, isServer: boolean = false) {
         let version = "iOS." + require('../../package.json').version;
