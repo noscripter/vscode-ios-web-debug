@@ -94,7 +94,7 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
                     if (deviceName !== "*") {
                         const matchingDevices = devices.filter(deviceInfo => deviceInfo.deviceName && deviceInfo.deviceName.toLowerCase() === deviceName.toLowerCase());
                         if (!matchingDevices.length) {
-                            Utilities.Logger.log(`Warning: Can't find a device with deviceName: ${deviceName}. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, true);
+                            Utils.Logger.log(`Warning: Can't find a device with deviceName: ${deviceName}. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, true);
                         } else {
                             devices = matchingDevices;
                         }
@@ -102,7 +102,7 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
 
                     if (devices.length) {
                         if (devices.length > 1 && deviceName !== "*") {
-                            Utilities.Logger.log(`Warning: Found more than one valid target device. Attaching to the first one. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, true);
+                            Utils.Logger.log(`Warning: Found more than one valid target device. Attaching to the first one. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, true);
                         }
 
                         // Get the port for the actual device endpoint
@@ -123,7 +123,7 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
             return devicePort;
         },
         e => {
-            return Utilities.errP('Cannot connect to the proxy: ' + e.message);
+            return Utils.errP('Cannot connect to the proxy: ' + e.message);
         });
     }
 }
