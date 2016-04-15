@@ -17,6 +17,11 @@ var sources = [
     'typings/main'
 ].map(function(tsFolder) { return tsFolder + '/**/*.ts'; });
 
+var lintSources = [
+    'src',
+    'test'
+].map(function(tsFolder) { return tsFolder + '/**/*.ts'; });
+
 var projectConfig = {
     noImplicitAny: false,
     target: 'ES5',

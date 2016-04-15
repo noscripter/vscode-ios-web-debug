@@ -16,7 +16,7 @@
 	"categories": ["Debuggers"],
     "license": "SEE LICENSE IN LICENSE.txt",
     "dependencies": {
-        "vscode-chrome-debug-core": "0.0.2"
+        "vscode-chrome-debug-core": "0.0.4"
     },
     "optionalDependencies": {
         "vs-libimobile" : "^0.0.3"

@@ -2,7 +2,7 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
  
-import {ChromeDebugAdapter, Utils} from 'vscode-chrome-debug-core';
+import {ChromeDebugAdapter, Utils, Logger} from 'vscode-chrome-debug-core';
 import * as iosUtils from './utilities';
 import {spawn, ChildProcess} from 'child_process';
 
@@ -50,15 +50,15 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
             proxyArgs.push(...args.proxyArgs);
         }
 
-        Utils.Logger.log(`spawn('${proxyPath}', ${JSON.stringify(proxyArgs) })`);
+        Logger.log(`spawn('${proxyPath}', ${JSON.stringify(proxyArgs) })`);
         this._proxyProc = spawn(proxyPath, proxyArgs, {
             detached: true,
             stdio: ['ignore']
         });
         (<any>this._proxyProc).unref();
         this._proxyProc.on('error', (err) => {
-            Utils.Logger.log('device proxy error: ' + err);
-            Utils.Logger.log('Do you have the iTunes drivers installed?');
+            Logger.log('device proxy error: ' + err);
+            Logger.log('Do you have the iTunes drivers installed?');
             this.terminateSession();
         });
               
@@ -94,7 +94,7 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
                     if (deviceName !== "*") {
                         const matchingDevices = devices.filter(deviceInfo => deviceInfo.deviceName && deviceInfo.deviceName.toLowerCase() === deviceName.toLowerCase());
                         if (!matchingDevices.length) {
-                            Utils.Logger.log(`Warning: Can't find a device with deviceName: ${deviceName}. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, true);
+                            Logger.log(`Warning: Can't find a device with deviceName: ${deviceName}. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, Logger.LogLevel.Error);
                         } else {
                             devices = matchingDevices;
                         }
@@ -102,7 +102,7 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
 
                     if (devices.length) {
                         if (devices.length > 1 && deviceName !== "*") {
-                            Utils.Logger.log(`Warning: Found more than one valid target device. Attaching to the first one. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, true);
+                            Logger.log(`Warning: Found more than one valid target device. Attaching to the first one. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, Logger.LogLevel.Error);
                         }
 
                         // Get the port for the actual device endpoint

@@ -5,7 +5,7 @@
 import * as mockery from 'mockery';
 import * as assert from 'assert';
 import * as sinon from 'sinon';
-import {Utils, ChromeDebugAdapter} from 'vscode-chrome-debug-core';
+import {Utils, ChromeDebugAdapter, Logger} from 'vscode-chrome-debug-core';
 
 /** Not mocked - use for type only */
 import {IOSDebugAdapter as _IOSDebugAdapter} from '../src/iosDebugAdapter';
@@ -43,7 +43,8 @@ suite('IOSDebugAdapter', () => {
             test('if no port, rejects the attach promise', done => {
                 mockery.registerMock('vscode-chrome-debug-core', {
                     ChromeDebugAdapter: () => { },
-                    Utils: Utils
+                    Utils: Utils,
+                    Logger: Logger
                 });
 
                 const adapter = createAdapter();
@@ -63,13 +64,13 @@ suite('IOSDebugAdapter', () => {
                 class MockAdapter { };
                 class MockChildProcess { };
                 MockUtilities = {
-                    Platform: { Windows: 0, OSX: 1, Linux: 2 },
-                    Logger: { log: () => { } }
+                    Platform: { Windows: 0, OSX: 1, Linux: 2 }
                 };
 
                 mockery.registerMock('vscode-chrome-debug-core', {
                     ChromeDebugAdapter: MockAdapter,
-                    Utils: MockUtilities
+                    Utils: MockUtilities,
+                    Logger: Logger
                 });
                 mockery.registerMock('child_process', MockChildProcess);
 
@@ -162,7 +163,8 @@ suite('IOSDebugAdapter', () => {
 
                 mockery.registerMock('vscode-chrome-debug-core', {
                     ChromeDebugAdapter: MockAdapter,
-                    Utils: MockUtilities
+                    Utils: MockUtilities,
+                    Logger: Logger
                 });
                 mockery.registerMock('child_process', MockChildProcess);
 
