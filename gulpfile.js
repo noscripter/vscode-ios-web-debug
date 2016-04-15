@@ -14,7 +14,7 @@ const tslint = require('gulp-tslint');
 var sources = [
     'src',
     'test',
-    'typings'
+    'typings/main'
 ].map(function(tsFolder) { return tsFolder + '/**/*.ts'; });
 
 var projectConfig = {
