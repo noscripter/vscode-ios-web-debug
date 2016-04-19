@@ -20,7 +20,7 @@ A Visual Studio Code extension to debug your Javascript code running on iOS devi
 ## Installation
 
 #### Windows
-Nothing to do
+Nothing to do as there is a proxy included with the extension from the 'vs-libimobile' npm package
 
 #### OSX/Mac
 Make sure you have Homebrew installed, and run the following command to install (https://github.com/google/ios-webkit-debug-proxy)[ios-webkit-debug-proxy]
