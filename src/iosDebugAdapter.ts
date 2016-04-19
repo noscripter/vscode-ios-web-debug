@@ -2,11 +2,11 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
  
-import {WebKitDebugAdapter, Utilities} from 'debugger-for-chrome';
+import {ChromeDebugAdapter, Utils, Logger} from 'vscode-chrome-debug-core';
 import * as iosUtils from './utilities';
 import {spawn, ChildProcess} from 'child_process';
 
-export class IOSDebugAdapter extends WebKitDebugAdapter {
+export class IOSDebugAdapter extends ChromeDebugAdapter {
     private _proxyProc: ChildProcess;
     
     public constructor() {
@@ -15,7 +15,7 @@ export class IOSDebugAdapter extends WebKitDebugAdapter {
     
     public attach(args: any): Promise<void> {
         if (args.port == null) {
-            return Utilities.errP('The "port" field is required in the attach config.');
+            return Utils.errP('The "port" field is required in the attach config.');
         }
 
         this.initializeLogging('attach-ios', args);
@@ -23,10 +23,10 @@ export class IOSDebugAdapter extends WebKitDebugAdapter {
         // Check exists?
         const proxyPath = args.proxyExecutable || iosUtils.getProxyPath();
         if (!proxyPath) {
-            if (Utilities.getPlatform() != Utilities.Platform.Windows) {
-                return Utilities.errP(`No iOS proxy was found. Install an iOS proxy (https://github.com/google/ios-webkit-debug-proxy) and specify a valid 'proxyExecutable' path`);
+            if (Utils.getPlatform() != Utils.Platform.Windows) {
+                return Utils.errP(`No iOS proxy was found. Install an iOS proxy (https://github.com/google/ios-webkit-debug-proxy) and specify a valid 'proxyExecutable' path`);
             } else {
-                return Utilities.errP(`No iOS proxy was found. Run 'npm install -g vs-libimobile' and specify a valid 'proxyExecutable' path`);
+                return Utils.errP(`No iOS proxy was found. Run 'npm install -g vs-libimobile' and specify a valid 'proxyExecutable' path`);
             }
         }
 
@@ -50,15 +50,15 @@ export class IOSDebugAdapter extends WebKitDebugAdapter {
             proxyArgs.push(...args.proxyArgs);
         }
 
-        Utilities.Logger.log(`spawn('${proxyPath}', ${JSON.stringify(proxyArgs) })`);
+        Logger.log(`spawn('${proxyPath}', ${JSON.stringify(proxyArgs) })`);
         this._proxyProc = spawn(proxyPath, proxyArgs, {
             detached: true,
             stdio: ['ignore']
         });
         (<any>this._proxyProc).unref();
         this._proxyProc.on('error', (err) => {
-            Utilities.Logger.log('device proxy error: ' + err);
-            Utilities.Logger.log('Do you have the iTunes drivers installed?');
+            Logger.log('device proxy error: ' + err);
+            Logger.log('Do you have the iTunes drivers installed?');
             this.terminateSession();
         });
               
@@ -82,7 +82,7 @@ export class IOSDebugAdapter extends WebKitDebugAdapter {
     
     private _attachToDevice(proxyPort: number, deviceName: string): Promise<number> {
         // Attach to a device over the proxy
-        return Utilities.getURL(`http://localhost:${proxyPort}/json`).then(jsonResponse => {
+        return Utils.getURL(`http://localhost:${proxyPort}/json`).then(jsonResponse => {
             let devicePort = proxyPort;
             
             try {
@@ -94,7 +94,7 @@ export class IOSDebugAdapter extends WebKitDebugAdapter {
                     if (deviceName !== "*") {
                         const matchingDevices = devices.filter(deviceInfo => deviceInfo.deviceName && deviceInfo.deviceName.toLowerCase() === deviceName.toLowerCase());
                         if (!matchingDevices.length) {
-                            Utilities.Logger.log(`Warning: Can't find a device with deviceName: ${deviceName}. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, true);
+                            Logger.log(`Warning: Can't find a device with deviceName: ${deviceName}. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, Logger.LogLevel.Error);
                         } else {
                             devices = matchingDevices;
                         }
@@ -102,7 +102,7 @@ export class IOSDebugAdapter extends WebKitDebugAdapter {
 
                     if (devices.length) {
                         if (devices.length > 1 && deviceName !== "*") {
-                            Utilities.Logger.log(`Warning: Found more than one valid target device. Attaching to the first one. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, true);
+                            Logger.log(`Warning: Found more than one valid target device. Attaching to the first one. Available devices: ${JSON.stringify(devices.map(d => d.deviceName))}`, Logger.LogLevel.Error);
                         }
 
                         // Get the port for the actual device endpoint
@@ -123,7 +123,7 @@ export class IOSDebugAdapter extends WebKitDebugAdapter {
             return devicePort;
         },
         e => {
-            return Utilities.errP('Cannot connect to the proxy: ' + e.message);
+            return Utils.errP('Cannot connect to the proxy: ' + e.message);
         });
     }
 }

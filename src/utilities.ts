@@ -2,14 +2,14 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
 
-import {Utilities} from 'debugger-for-chrome';
+import {Utils} from 'vscode-chrome-debug-core';
 import * as path from 'path';
 
 export function getProxyPath(): string {
-    const platform = Utilities.getPlatform();
-    if (platform === Utilities.Platform.Windows) {
+    const platform = Utils.getPlatform();
+    if (platform === Utils.Platform.Windows) {
         var proxy = path.resolve(__dirname, "../../node_modules/vs-libimobile/lib/ios_webkit_debug_proxy.exe");
-        if (Utilities.existsSync(proxy)) {
+        if (Utils.existsSync(proxy)) {
             return proxy;
         }
     }

@@ -2,25 +2,25 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
 
-var gulp = require('gulp');
-var path = require('path');
-var ts = require('gulp-typescript');
-var log = require('gulp-util').log;
-var typescript = require('typescript');
-var sourcemaps = require('gulp-sourcemaps');
-var mocha = require('gulp-mocha');
-var merge = require('merge2');
+const gulp = require('gulp');
+const path = require('path');
+const ts = require('gulp-typescript');
+const log = require('gulp-util').log;
+const typescript = require('typescript');
+const sourcemaps = require('gulp-sourcemaps');
+const mocha = require('gulp-mocha');
+const tslint = require('gulp-tslint');
 
 var sources = [
     'src',
     'test',
-    'typings',
-    'node_modules/debugger-for-chrome/lib'
+    'typings/main'
 ].map(function(tsFolder) { return tsFolder + '/**/*.ts'; });
 
-var bins = [
-    'node_modules/debugger-for-chrome/out'
-].map(function(tsFolder) { return tsFolder + '/**/*.js'; });
+var lintSources = [
+    'src',
+    'test'
+].map(function(tsFolder) { return tsFolder + '/**/*.ts'; });
 
 var projectConfig = {
     noImplicitAny: false,
@@ -32,18 +32,11 @@ var projectConfig = {
 };
 
 gulp.task('build', function () {
-    var tsResult = gulp.src(sources, { base: '.' })
-        .pipe(sourcemaps.init())
-        .pipe(ts(projectConfig));
-
-	return merge([
-		tsResult.js
-        .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: 'file:///' + __dirname }))
-        .pipe(gulp.dest('out'))
-        ,
-        gulp.src(bins)
-        .pipe(gulp.dest('out/src/node_modules/debugger-for-chrome'))
-	]);
+	return gulp.src(sources, { base: '.' }) 
+         .pipe(sourcemaps.init()) 
+         .pipe(ts(projectConfig)).js 
+         .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: 'file:///' + __dirname })) 
+         .pipe(gulp.dest('out')); 
 });
 
 gulp.task('watch', ['build'], function(cb) {
@@ -52,6 +45,12 @@ gulp.task('watch', ['build'], function(cb) {
 });
 
 gulp.task('default', ['build']);
+
+gulp.task('tslint', function() { 
+    return gulp.src(lintSources, { base: '.' })
+         .pipe(tslint()) 
+         .pipe(tslint.report('verbose')); 
+}); 
 
 function test() {
     return gulp.src('out/test/**/*.test.js', { read: false })
