@@ -162,7 +162,8 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
                 proxyPath: proxyPath,
                 optionalDeviceName: optionalDeviceName,
                 proxyPort: proxyPort,
-                proxyArgs: proxyArgs
+                proxyArgs: proxyArgs,
+                originalArgs: args
             };
         }
         
@@ -185,10 +186,9 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
         
         // Now attach to the device
         return this._attachToDevice(settings.proxyPort, settings.optionalDeviceName).then((devicePort: number) => {
-            let attachArgs = {
-                port: devicePort,
-                cwd: ""
-            };
+            let attachArgs = settings.originalArgs;
+            attachArgs["port"] = devicePort;
+            attachArgs["cwd"] = "";
             return super.attach(attachArgs);
         });
     }

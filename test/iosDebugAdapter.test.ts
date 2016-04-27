@@ -408,10 +408,10 @@ suite('IOSDebugAdapter', () => {
                 let deviceInfo = [];
                 utilitiesMock.expects('getURL').returns(Promise.resolve(JSON.stringify(deviceInfo)));
 
-                adapterMock.expects('attach').withArgs({
+                adapterMock.expects('attach').withArgs(sinon.match({
                     port: proxyPort,
                     cwd: ''
-                }).returns(Promise.resolve(''));
+                })).returns(Promise.resolve(''));
 
                 const adapter = createAdapter();
                 return adapter.attach({ port: proxyPort, proxyExecutable: 'test.exe' }).then(
@@ -419,7 +419,7 @@ suite('IOSDebugAdapter', () => {
                     e => assert.fail('Expecting promise to succeed')
                 );
             });
-
+            
             test('if valid proxy data, returns the first device port', done => {
                 let proxyPort = 1234;
                 let devicePort = 9999;
@@ -435,10 +435,10 @@ suite('IOSDebugAdapter', () => {
                 ];
                 utilitiesMock.expects('getURL').returns(Promise.resolve(JSON.stringify(deviceInfo)));
 
-                adapterMock.expects('attach').withArgs({
+                adapterMock.expects('attach').withArgs(sinon.match({
                     port: devicePort,
                     cwd: ''
-                }).returns(Promise.resolve(''));
+                })).returns(Promise.resolve(''));
 
                 const adapter = createAdapter();
                 return adapter.attach({ port: proxyPort, proxyExecutable: 'test.exe' }).then(
@@ -462,10 +462,10 @@ suite('IOSDebugAdapter', () => {
                 ];
                 utilitiesMock.expects('getURL').returns(Promise.resolve(JSON.stringify(deviceInfo)));
 
-                adapterMock.expects('attach').withArgs({
+                adapterMock.expects('attach').withArgs(sinon.match({
                     port: devicePort,
                     cwd: ''
-                }).returns(Promise.resolve(''));
+                })).returns(Promise.resolve(''));
 
                 const adapter = createAdapter();
                 return adapter.attach({ port: proxyPort, proxyExecutable: 'test.exe', deviceName: 'nophone' }).then(
@@ -489,10 +489,10 @@ suite('IOSDebugAdapter', () => {
                 ];
                 utilitiesMock.expects('getURL').returns(Promise.resolve(JSON.stringify(deviceInfo)));
 
-                adapterMock.expects('attach').withArgs({
+                adapterMock.expects('attach').withArgs(sinon.match({
                     port: devicePort,
                     cwd: ''
-                }).returns(Promise.resolve(''));
+                })).returns(Promise.resolve(''));
 
                 const adapter = createAdapter();
                 return adapter.attach({ port: proxyPort, proxyExecutable: 'test.exe', deviceName: '*' }).then(
@@ -516,13 +516,31 @@ suite('IOSDebugAdapter', () => {
                 ];
                 utilitiesMock.expects('getURL').returns(Promise.resolve(JSON.stringify(deviceInfo)));
 
-                adapterMock.expects('attach').withArgs({
+                adapterMock.expects('attach').withArgs(sinon.match({
                     port: devicePort + 1,
                     cwd: ''
-                }).returns(Promise.resolve(''));
+                })).returns(Promise.resolve(''));
 
                 const adapter = createAdapter();
                 return adapter.attach({ port: proxyPort, proxyExecutable: 'test.exe', deviceName: 'IPHonE2' }).then(
+                    done(),
+                    e => assert.fail('Expecting promise to succeed')
+                );
+            });
+            
+            test('passes on sourceMaps argument', done => {
+                let proxyPort = 1234;
+                let deviceInfo = [];
+                utilitiesMock.expects('getURL').returns(Promise.resolve(JSON.stringify(deviceInfo)));
+
+                adapterMock.expects('attach').withArgs(sinon.match({
+                    port: proxyPort,
+                    cwd: '',
+                    sourceMaps: true
+                })).returns(Promise.resolve(''));
+
+                const adapter = createAdapter();
+                return adapter.attach({ port: proxyPort, proxyExecutable: 'test.exe', sourceMaps: true }).then(
                     done(),
                     e => assert.fail('Expecting promise to succeed')
                 );
