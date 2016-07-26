@@ -59,8 +59,7 @@
                 "url": "index.html",
                 "webRoot":"${workspaceRoot}",
                 "deviceName":"*",
-                "tunnelPort": 9123,
-                "startLocalServer": true
+                "tunnelPort": 8080
             },
             {
                 "name": "Navigate to url on an iOS device",
@@ -68,7 +67,7 @@
                 "request": "launch",
                 "port": 9222,
                 "url": "http://mysite.com/index.html",
-                "webRoot":"wwwroot",
+                "webRoot":"${workspaceRoot}",
                 "deviceName":"*"
             },
             {
