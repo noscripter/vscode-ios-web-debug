@@ -16,7 +16,7 @@
 	"categories": ["Debuggers"],
     "license": "SEE LICENSE IN LICENSE.txt",
     "dependencies": {
-        "vscode-chrome-debug-core": "0.0.5",
+        "vscode-chrome-debug-core": "0.1.16",
         "http-server": "0.9.0",
         "localtunnel": "1.8.1"
     },
