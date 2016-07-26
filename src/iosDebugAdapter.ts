@@ -7,12 +7,10 @@ import * as iosUtils from './utilities';
 import {spawn, ChildProcess} from 'child_process';
 import * as Url from 'url';
 import * as localtunnel from 'localtunnel';
-import * as server from 'http-server';
 import {IProxySettings} from './iosDebugAdapterInterfaces';
 
 export class IOSDebugAdapter extends ChromeDebugAdapter {
     private _proxyProc: ChildProcess;
-    private _localServer: server.HttpServer;
     private _localTunnel: ILocalTunnelInfoObject;
     
     public constructor() {
@@ -32,21 +30,8 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
             return Utils.errP(settings);
         }
 
-        const startLocalServer = args.startLocalServer || false;
         let tunnelPort = args.tunnelPort || 0;
         let launchPromise: Promise<string> = null;
-
-        if (startLocalServer) {
-            Logger.log('Launching local http-server', Logger.LogLevel.Log);
-            
-            if (!tunnelPort) {
-                tunnelPort = 8080;
-                Logger.log(`No 'tunnelPort' value was specified in launch.json config, so defaulting to port ` + tunnelPort, Logger.LogLevel.Log);
-            }
-            
-            this._localServer = server.createServer(<any>{root: args.webRoot});
-            (<any>this._localServer).listen(tunnelPort);
-        }
         
         if (tunnelPort) {
             launchPromise = new Promise((resolve, reject) => {
@@ -111,12 +96,7 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
             this._localTunnel.close();
             this._localTunnel = null;
         }
-        
-        if (this._localServer) {
-            this._localServer.close();
-            this._localServer = null;
-        }
-        
+                
         if (this._proxyProc) {  
             this._proxyProc.kill('SIGINT');  
             this._proxyProc = null;  

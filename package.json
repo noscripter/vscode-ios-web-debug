@@ -136,11 +136,6 @@
                             "type": "number",
                             "description": "The local port to expose from the local machine to the internet via a tunnel proxy (or '0' to disable). This allows the connected iOS device to access a webserver running on the local machine",
                             "default": 0
-                        },
-                        "startLocalServer": {
-                            "type": "boolean",
-                            "description": "When true, will start a small http-server on the local machine to serve up files to the iOS device. Will use the tunnelPort value as the port for the server.",
-                            "default": false
                         }
                     }
                 },                
