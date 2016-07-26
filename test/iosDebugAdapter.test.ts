@@ -5,16 +5,20 @@
 import * as mockery from 'mockery';
 import * as assert from 'assert';
 import * as sinon from 'sinon';
-import {Utils, ChromeDebugAdapter, Logger} from 'vscode-chrome-debug-core';
+import {utils, ChromeDebugAdapter, ChromeConnection, chromeTargetDiscoveryStrategy, logger} from 'vscode-chrome-debug-core';
 
 /** Not mocked - use for type only */
 import {IOSDebugAdapter as _IOSDebugAdapter} from '../src/iosDebugAdapter';
 
 const MODULE_UNDER_TEST = '../src/iosDebugAdapter';
 suite('IOSDebugAdapter', () => {
+
     function createAdapter(): _IOSDebugAdapter {
         const IOSDebugAdapter: typeof _IOSDebugAdapter = require(MODULE_UNDER_TEST).IOSDebugAdapter;
-        return new IOSDebugAdapter();
+        const targetFilter = target => target && (!target.type || target.type === 'page');
+        const connection = new ChromeConnection(chromeTargetDiscoveryStrategy.getChromeTargetWebSocketURL, targetFilter);
+
+        return new IOSDebugAdapter(connection);
     };
 
     setup(() => {
@@ -44,8 +48,8 @@ suite('IOSDebugAdapter', () => {
             test('if no port, rejects the launch promise', done => {
                 mockery.registerMock('vscode-chrome-debug-core', {
                     ChromeDebugAdapter: () => { },
-                    Utils: Utils,
-                    Logger: Logger
+                    utils: utils,
+                    logger: logger
                 });
 
                 const adapter = createAdapter();
@@ -85,13 +89,13 @@ suite('IOSDebugAdapter', () => {
 
                 mockery.registerMock('vscode-chrome-debug-core', {
                     ChromeDebugAdapter: MockAdapter,
-                    Utils: MockUtilities,
-                    Logger: Logger
+                    utils: MockUtilities,
+                    logger: logger
                 });
                 mockery.registerMock('child_process', MockChildProcess);
 
                 adapterMock = sinon.mock(MockAdapter.prototype);
-                adapterMock.expects('initializeLogging').once();
+                adapterMock.expects('setupLogging').once();
                 adapterMock.expects('attach').returns(Promise.resolve(''));
                 
                 chromeConnectionMock = sinon.mock(MockChromeConnection);
@@ -206,8 +210,8 @@ suite('IOSDebugAdapter', () => {
             test('if no port, rejects the attach promise', done => {
                 mockery.registerMock('vscode-chrome-debug-core', {
                     ChromeDebugAdapter: () => { },
-                    Utils: Utils,
-                    Logger: Logger
+                    utils: utils,
+                    logger: logger
                 });
 
                 const adapter = createAdapter();
@@ -232,13 +236,13 @@ suite('IOSDebugAdapter', () => {
 
                 mockery.registerMock('vscode-chrome-debug-core', {
                     ChromeDebugAdapter: MockAdapter,
-                    Utils: MockUtilities,
-                    Logger: Logger
+                    utils: MockUtilities,
+                    logger: logger
                 });
                 mockery.registerMock('child_process', MockChildProcess);
 
                 adapterMock = sinon.mock(MockAdapter.prototype);
-                adapterMock.expects('initializeLogging').once();
+                adapterMock.expects('setupLogging').once();
 
                 utilitiesMock = sinon.mock(MockUtilities);
                 sinon.stub(MockUtilities, 'errP', () => Promise.reject(''));
@@ -326,13 +330,13 @@ suite('IOSDebugAdapter', () => {
 
                 mockery.registerMock('vscode-chrome-debug-core', {
                     ChromeDebugAdapter: MockAdapter,
-                    Utils: MockUtilities,
-                    Logger: Logger
+                    utils: MockUtilities,
+                    logger: logger
                 });
                 mockery.registerMock('child_process', MockChildProcess);
 
                 adapterMock = sinon.mock(MockAdapter.prototype);
-                adapterMock.expects('initializeLogging').once();
+                adapterMock.expects('setupLogging').once();
 
                 utilitiesMock = sinon.mock(MockUtilities);
 

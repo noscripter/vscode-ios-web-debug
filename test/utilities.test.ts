@@ -4,7 +4,7 @@
 
 import * as mockery from 'mockery';
 import * as assert from 'assert';
-import {Utils} from 'vscode-chrome-debug-core';
+import { utils } from 'vscode-chrome-debug-core';
 
 /** Not mocked - use for type only */
 import * as _Utilities from '../src/utilities';
@@ -28,9 +28,9 @@ suite('Utilities', () => {
     suite('getProxyPath()', () => {
         test('if windows and path exists, returns correct path', () => {
             mockery.registerMock('vscode-chrome-debug-core', {
-                Utils: {
+                utils: {
                     Platform: { Windows: 0, OSX: 1, Linux: 2 },
-                    getPlatform: () => Utils.Platform.Windows,
+                    getPlatform: () => utils.Platform.Windows,
                     existsSync: () => true
                 }
             });
@@ -45,9 +45,9 @@ suite('Utilities', () => {
 
         test('if windows and path not found, returns null', () => {
             mockery.registerMock('vscode-chrome-debug-core', {
-                Utils: {
+                utils: {
                     Platform: { Windows: 0, OSX: 1, Linux: 2 },
-                    getPlatform: () => Utils.Platform.Windows,
+                    getPlatform: () => utils.Platform.Windows,
                     existsSync: () => false
                 }
             });
@@ -62,9 +62,9 @@ suite('Utilities', () => {
 
         test('if osx, returns null', () => {
             mockery.registerMock('vscode-chrome-debug-core', {
-                Utils: {
+                utils: {
                     Platform: { Windows: 0, OSX: 1, Linux: 2 },
-                    getPlatform: () => Utils.Platform.OSX
+                    getPlatform: () => utils.Platform.OSX
                 }
             });
             mockery.registerMock('path', {});
@@ -75,9 +75,9 @@ suite('Utilities', () => {
 
         test('if linux, returns null', () => {
             mockery.registerMock('vscode-chrome-debug-core', {
-                Utils: {
+                utils: {
                     Platform: { Windows: 0, OSX: 1, Linux: 2 },
-                    getPlatform: () => Utils.Platform.Linux
+                    getPlatform: () => utils.Platform.Linux
                 }
             });
             mockery.registerMock('path', {});
