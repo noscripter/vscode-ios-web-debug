@@ -1,9 +1,23 @@
-# VSCode - Debugger for iOS Web
-[![build status](https://travis-ci.org/Microsoft/vscode-ios-web-debug.svg?branch=master)](https://travis-ci.org/Microsoft/vscode-ios-web-debug)
 
-A Visual Studio Code extension to debug your Javascript code running on iOS devices.
+<h1 align="center">
+  <br>
+    <img src=".readme/icon.png" alt="logo" width="200">
+  <br>
+  VSCode - Debugger for iOS Web
+  <br>
+  <br>
+</h1>
 
-<INSERT ANIMATED GIF>
+<h4 align="center">Debug your JavaScript code running in Safari on iOS devices from VS Code.</h4>
+
+<p align="center">
+  <a href="https://travis-ci.com/Microsoft/vscode-ios-web-debug"><img src="https://travis-ci.com/Microsoft/vscode-ios-web-debug.svg?token=WQL8U9tKa9M9yQmjXHTp" alt="Travis"></a>
+  <a href="https://github.com/microsoft/vscode-ios-web-debug/releases"><img src="https://img.shields.io/github/release/Microsoft/vscode-ios-web-debug.svg" alt="Release"></a>
+</p>
+
+Debug your JavaScript code running in Safari on iOS devices from VS Code both on **Windows** and Mac.
+
+![](.readme/splash.jpg)
 
 **Things that should work**
 * Setting breakpoints, including in source files when source maps are enabled
@@ -17,13 +31,13 @@ A Visual Studio Code extension to debug your Javascript code running on iOS devi
 **Unsupported scenarios**
 * Debugging webworkers
 
-## Installation
+## Getting Started
 
 #### Windows
 Nothing to do as there is a proxy included with the extension from the 'vs-libimobile' npm package
 
 #### OSX/Mac
-Make sure you have Homebrew installed, and run the following command to install (https://github.com/google/ios-webkit-debug-proxy)[ios-webkit-debug-proxy]
+Make sure you have Homebrew installed, and run the following command to install [ios-webkit-debug-proxy](https://github.com/google/ios-webkit-debug-proxy)
 
 ```
 brew install ios-webkit-debug-proxy
