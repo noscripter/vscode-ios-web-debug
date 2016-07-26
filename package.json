@@ -2,8 +2,8 @@
 	"name": "debugger-for-ios-web",
 	"displayName": "Debugger for iOS Web",
 	"version": "0.1.1",
-    "icon": "images/icon.png",
-	"description": "Debug your JavaScript code running in Safari on a connected iOS device",
+    "icon": ".readme/icon.png",
+	"description": "Debug your JavaScript code running in Safari on iOS devices from VS Code.",
     "repository": {
         "type": "git",
         "url": "https://github.com/Microsoft/vscode-ios-web-debug"
