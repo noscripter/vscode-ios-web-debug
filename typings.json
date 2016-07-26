@@ -6,8 +6,5 @@
     "mockery": "registry:dt/mockery#1.4.0+20160316155526",
     "node": "registry:dt/node#4.0.0+20160412142033",
     "sinon": "registry:dt/sinon#1.16.0+20160317120654"
-  },
-  "dependencies": {
-    "http-server": "registry:npm/http-server#0.8.5+20160211010139"
   }
 }

@@ -112,25 +112,16 @@ suite('IOSDebugAdapter', () => {
                 cpMock.verify();
             });
             
-            test('no settings should skip tunnel and server', done => {
+            test('no settings should skip tunnel', done => {
                 let isTunnelCreated = false;
-                var MockHttpServer = {};
                 var MockServer = {};
                 var MockTunnel = () => { isTunnelCreated = true; };
-                mockery.registerMock('http-server', MockHttpServer);
                 mockery.registerMock('localtunnel', MockTunnel);
-
-                let httpServerMock = sinon.mock(MockHttpServer);
-                httpServerMock.expects("createServer").never();
-                
-                let serverMock = sinon.mock(MockServer);
-                serverMock.expects("listen").never();
                 
                 const adapter = createAdapter();
                 return adapter.launch({ port: 1234, proxyExecutable: 'test.exe' }).then(
                     () => {
                         assert.equal(isTunnelCreated, false, "Should not create tunnel");
-                        serverMock.verify();
                         return done();
                     },
                     e => assert.fail('Expecting promise to succeed')
@@ -141,8 +132,6 @@ suite('IOSDebugAdapter', () => {
                 let isTunnelCreated: boolean;
                 let expectedWebRoot: string;
                 let expectedPort: number;
-                let httpServerMock;
-                let serverMock;
                 let instanceMock;
                 let MockServer = {};
                 let MockTunnelInstance = {};
@@ -150,60 +139,20 @@ suite('IOSDebugAdapter', () => {
                     isTunnelCreated = false;
                     expectedWebRoot = "root";
                     expectedPort = 8080;
-                    var MockHttpServer = {};
                     var MockTunnel = (a, f) => { isTunnelCreated = true; f(null, MockTunnelInstance); };
                     MockTunnelInstance = { url: "index.html" };
                     
-                    mockery.registerMock('http-server', MockHttpServer);
-                    mockery.registerMock('localtunnel', MockTunnel);
-                    
-                    httpServerMock = sinon.mock(MockHttpServer);
-                    
-                    serverMock = sinon.mock(MockServer);
-                    
+                    mockery.registerMock('localtunnel', MockTunnel);                    
                     instanceMock = sinon.mock(MockTunnelInstance);
                     instanceMock.expects("on").once();
                     
                 });
                 teardown(() => {
                     assert.equal(isTunnelCreated, true, "Should create tunnel");
-                    httpServerMock.verify();
-                    serverMock.verify();
                     instanceMock.verify();
                 });
-                
-                test('startLocalServer should start the http-server with correct webRoot', done => {
-                    expectedWebRoot = "myWebRootValue";
-                    expectedPort = 8080;
-
-                    httpServerMock.expects("createServer").withArgs({root: expectedWebRoot}).returns(MockServer);
-                    serverMock.expects("listen").withArgs(expectedPort);
-                    
-                    const adapter = createAdapter();
-                    return adapter.launch({ port: 1234, proxyExecutable: 'test.exe', startLocalServer: true, webRoot: expectedWebRoot }).then(
-                        () => done(),
-                        e => assert.fail('Expecting promise to succeed')
-                    );
-                });
-
-                test('startLocalServer should start the http-server with correct tunnelPort', done => {
-                    expectedWebRoot = "myWebRootValue";
-                    expectedPort = 9123;
-                    
-                    httpServerMock.expects("createServer").withArgs({root: expectedWebRoot}).returns(MockServer);
-                    serverMock.expects("listen").withArgs(expectedPort);
-                    
-                    const adapter = createAdapter();
-                    return adapter.launch({ port: 1234, proxyExecutable: 'test.exe', startLocalServer: true, webRoot: expectedWebRoot, tunnelPort: expectedPort }).then(
-                        () => done(),
-                        e => assert.fail('Expecting promise to succeed')
-                    );
-                });
-                
-                test('tunnelPort alone should start the localtunnel but not the http-server', done => {
-                    httpServerMock.expects("createServer").never();
-                    serverMock.expects("listen").never();
-                    
+                                
+                test('tunnelPort alone should start the localtunnel', done => {                    
                     const adapter = createAdapter();
                     return adapter.launch({ port: 1234, proxyExecutable: 'test.exe', tunnelPort: 9283 }).then(
                         () => done(),
@@ -217,10 +166,7 @@ suite('IOSDebugAdapter', () => {
                     
                     instanceMock = sinon.mock(MockTunnelInstance);
                     instanceMock.expects("on").once();
-                    
-                    httpServerMock.expects("createServer").never();
-                    serverMock.expects("listen").never();
-                    
+                                        
                     chromeConnectionMock.restore();
                     chromeConnectionMock = sinon.mock(MockChromeConnection);
                     chromeConnectionMock.expects('sendMessage').withArgs("Page.navigate", {url: expectedUrl});
@@ -240,10 +186,7 @@ suite('IOSDebugAdapter', () => {
                     
                     instanceMock = sinon.mock(MockTunnelInstance);
                     instanceMock.expects("on").once();
-                    
-                    httpServerMock.expects("createServer").never();
-                    serverMock.expects("listen").never();
-                    
+                                        
                     chromeConnectionMock.restore();
                     chromeConnectionMock = sinon.mock(MockChromeConnection);
                     chromeConnectionMock.expects('sendMessage').withArgs("Page.navigate", {url: expectedUrl});
