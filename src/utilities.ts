@@ -12,6 +12,12 @@ export function getProxyPath(): string {
         if (utils.existsSync(proxy)) {
             return proxy;
         }
+    } else if (platform === utils.Platform.OSX) {
+        let path = '/usr/local/bin/ios_webkit_debug_proxy'
+        if (utils.existsSync(path)) {
+            return path;
+        }
     }
+
     return null;
 }
