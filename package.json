@@ -3,7 +3,7 @@
 	"displayName": "Debugger for iOS Web",
 	"version": "0.1.0",
     "icon": "images/icon.png",
-	"description": "Debug your JavaScript code running in Safari on a connected iOS device using a Chrome Debugger protocol proxy.",
+	"description": "Debug your JavaScript code running in Safari on a connected iOS device",
     "repository": {
         "type": "git",
         "url": "https://github.com/Microsoft/vscode-ios-web-debug"
