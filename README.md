@@ -3,7 +3,7 @@
   <br>
     <img src=".readme/icon.png" alt="logo" width="200">
   <br>
-  VSCode - Debugger for iOS Web
+  VS Code - Debugger for iOS Web
   <br>
   <br>
 </h1>
@@ -19,22 +19,22 @@ Debug your JavaScript code running in Safari on iOS devices from VS Code both on
 
 ![](.readme/splash.jpg)
 
-**Things that should work**
+** Supported features **
 * Setting breakpoints, including in source files when source maps are enabled
 * Stepping, including with the buttons on the Chrome page
 * The Locals pane
 * Debugging eval scripts, script tags, and scripts that are added dynamically
 * Watches
-* The debug console
-* Most console APIs
+* Console
 
 **Unsupported scenarios**
-* Debugging webworkers
+* Debugging web workers
+* Any features that aren't script debugging.
 
 ## Getting Started
 
 #### Windows
-Nothing to do as there is a proxy included with the extension from the 'vs-libimobile' npm package
+Nothing/ to do as there is a proxy included with the extension from the `vs-libimobile` npm package
 
 #### OSX/Mac
 Make sure you have Homebrew installed, and run the following command to install [ios-webkit-debug-proxy](https://github.com/google/ios-webkit-debug-proxy)
