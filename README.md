@@ -65,18 +65,22 @@ Two example `launch.json` configs. You must specify either `file` or `url` to la
             "name": "iOS - Launch localhost with sourcemaps",
             "type": "ios",
             "request": "launch",
+            "port": 9222,
             "url": "http://dev.domain.com/",
-            "webRoot": "${workspaceRoot}/app/files",
+            "webRoot": "${workspaceRoot}",
+            "deviceName": "*",
             "sourceMaps": true
         },
         {
             "name": "iOS - Launch localhost with sourcemaps via Tunnel",
             "type": "ios",
             "request": "launch",
-            "webRoot": "${workspaceRoot}/app/files",
+            "port": 9222,
+            "webRoot": "${workspaceRoot}",
+            "deviceName": "*",
             "sourceMaps": true,
-            "tunnelPort: 8080
-        },
+            "tunnelPort": 8080
+        }
     ]
 }
 ```
@@ -90,21 +94,23 @@ An example `launch.json` config.
 {
     "version": "0.1.0",
     "configurations": [
-        {
-            "name": "iOS, attach with sourcemaps",
-            "type": "ios",
-            "request": "attach",
-            "port": 9222,
-            "sourceMaps": true,
-            "webRoot": "${workspaceRoot}/out"
-            "url": "http://dev.domain.com/",
-        }
+      {
+          "name": "iOS - Attach",
+          "type": "ios",
+          "request": "attach",
+          "port": 9222,
+          "sourceMaps": true,
+          "url": "http://dev.domain.com/",
+          "webRoot": "${workspaceRoot}",
+          "deviceName": "*"
+      }
     ]
 }
 ```
 
 #### Other optional launch config fields
 * `diagnosticLogging`: When true, the adapter logs its own diagnostic info to the console
+* `deviceName`: The name of the devices, if multiple devices are connected. `*` matches any device.
 
 
 ## Troubleshooting
