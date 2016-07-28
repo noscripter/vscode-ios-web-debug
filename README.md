@@ -15,7 +15,7 @@
   <a href="https://github.com/microsoft/vscode-ios-web-debug/releases"><img src="https://img.shields.io/github/release/Microsoft/vscode-ios-web-debug.svg" alt="Release"></a>
 </p>
 
-Debug your JavaScript code running in Safari on iOS devices from VS Code both on **Windows** and Mac.
+The VS Code iOS Web Debugger allows to debug your JavaScript code running in Safari on iOS devices (and iOS Simulators) from VS Code both on **Windows and Mac** without addtional tools.
 
 ![](.readme/demo.gif)
 
@@ -33,6 +33,8 @@ Debug your JavaScript code running in Safari on iOS devices from VS Code both on
 
 ## Getting Started
 
+Before you use the debugger you need to make sure you have the [latest version of iTunes](http://www.apple.com/itunes/download/) installed, as we need a few libraries provided by iTunes to talk to the iOS devices.
+
 #### Windows
 Nothing/ to do as there is a proxy included with the extension from the `vs-libimobile` npm package
 
@@ -49,7 +51,7 @@ When your launch config is set up, you can debug your project! Pick a launch con
 
 ### Configuration 
 
-The extension operates in two modes - it can `launch` an instance of Chrome navigated to your app, or it can `attach` to a running instance of Chrome. Just like when using the Node debugger, you configure these modes with a `.vscode/launch.json` file in the root directory of your project. You can create this file manually, or Code will create one for you if you try to run your project, and it doesn't exist yet.
+The extension operates in two modes - it can `launch` a URL in Safari on the device, or it can `attach` to a running tab inside Safari. Just like when using the Node debugger, you configure these modes with a `.vscode/launch.json` file in the root directory of your project. You can create this file manually, or Code will create one for you if you try to run your project, and it doesn't exist yet.
 
 To use this extension, you must first open the folder containing the project you want to work on.
 
@@ -60,24 +62,28 @@ Two example `launch.json` configs. You must specify either `file` or `url` to la
     "version": "0.1.0",
     "configurations": [
         {
-            "name": "Launch localhost with sourcemaps",
-            "type": "chrome",
+            "name": "iOS - Launch localhost with sourcemaps",
+            "type": "ios",
             "request": "launch",
-            "url": "http://localhost/mypage.html",
+            "url": "http://dev.domain.com/",
             "webRoot": "${workspaceRoot}/app/files",
             "sourceMaps": true
         },
         {
-            "name": "Launch index.html (without sourcemaps)",
-            "type": "chrome",
+            "name": "iOS - Launch localhost with sourcemaps via Tunnel",
+            "type": "ios",
             "request": "launch",
-            "file": "${workspaceRoot}/index.html"
+            "webRoot": "${workspaceRoot}/app/files",
+            "sourceMaps": true,
+            "tunnelPort: 8080
         },
     ]
 }
 ```
 
-Launch Chrome and navigate to your page.
+#### Attach
+
+Attach to an already running browser tab in Safari by using the `url` to match the correct tab
 
 An example `launch.json` config.
 ```
@@ -85,37 +91,21 @@ An example `launch.json` config.
     "version": "0.1.0",
     "configurations": [
         {
-            "name": "Attach with sourcemaps",
-            "type": "chrome",
+            "name": "iOS, attach with sourcemaps",
+            "type": "ios",
             "request": "attach",
             "port": 9222,
-            "sourceMaps": true
-        },
-        {
-            "name": "Attach to url with files served from ./out",
-            "type": "chrome",
-            "request": "attach",
-            "port": 9222,
+            "sourceMaps": true,
             "webRoot": "${workspaceRoot}/out"
+            "url": "http://dev.domain.com/",
         }
     ]
 }
 ```
 
 #### Other optional launch config fields
-* diagnosticLogging: When true, the adapter logs its own diagnostic info to the console
-* runtimeExecutable: Workspace relative or absolute path to the runtime executable to be used. If not specified, Chrome will be used from the default install location
-* runtimeArgs: Optional arguments passed to the runtime executable
-* userDataDir: Can be set to a temp directory, then Chrome will use that directory as the user profile directory. If Chrome is already running when you start debugging with a launch config, then the new instance won't start in remote debugging mode. If you don't want to close the original instance, you can set this property and the new instance will correctly be in remote debugging mode.
+* `diagnosticLogging`: When true, the adapter logs its own diagnostic info to the console
+
 
 ## Troubleshooting
-General things to try if you're having issues:
-* Ensure `webRoot` is set correctly if needed
-* Look at your sourcemap config carefully. A sourcemap has a path to the source files, and this extension uses that path to find the original source files on disk. Check the `sourceRoot` and `sources` properties in your sourcemap and make sure that they can be combined with the `webRoot` property in your launch config to build the correct path to the original source files.
-* This extension ignores sources that are inlined in the sourcemap - you may have a setup that works in Chrome Dev Tools, but not this extension, because the paths are incorrect, but Chrome Dev Tools are reading the inlined source content.
-* Close other running instances of Chrome - if Chrome is already running, the extension may not be able to attach, when using launch mode. Chrome can even stay running in the background when all its windows are closed, which will interfere - check the taskbar or kill the process if necessary.
-* Ensure nothing else is using port 9222, or specify a different port in your launch config
-* Check the console for warnings that this extension prints in some cases when it can't attach
-* Ensure the code in Chrome matches the code in Code. Chrome may cache an old version.
-* If you were previously using the `cwd` property in your launch config with the `file` property, you need to specify an absolute path for `file` instead, e.g. `"${workspaceRoot}/index.html"`.
-* File a bug in this extension's [GitHub repo](https://github.com/Microsoft/vscode-webkit-debug). Set the "diagnosticLogging" field in your launch config and attach the logs when filing a bug.
+Please have a look at [vscode-chrome-debug-core](https://github.com/Microsoft/vscode-chrome-debug-core/) for additional troubleshooting and options.
