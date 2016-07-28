@@ -17,9 +17,9 @@
 
 Debug your JavaScript code running in Safari on iOS devices from VS Code both on **Windows** and Mac.
 
-![](.readme/splash.jpg)
+![](.readme/demo.gif)
 
-** Supported features **
+**Supported features**
 * Setting breakpoints, including in source files when source maps are enabled
 * Stepping, including with the buttons on the Chrome page
 * The Locals pane
