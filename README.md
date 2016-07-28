@@ -115,3 +115,6 @@ An example `launch.json` config.
 
 ## Troubleshooting
 Please have a look at [vscode-chrome-debug-core](https://github.com/Microsoft/vscode-chrome-debug-core/) for additional troubleshooting and options.
+
+===
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
