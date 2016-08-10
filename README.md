@@ -43,7 +43,7 @@ Make sure you have Homebrew installed, and run the following command to install 
 
 ```
 brew install ios-webkit-debug-proxy
-````
+```
 
 ## Using the debugger
 
