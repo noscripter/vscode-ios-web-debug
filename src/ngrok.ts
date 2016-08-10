@@ -1,5 +1,4 @@
-// Typings for localtunnel
-
+// Typings for ngrok
 
 declare module 'ngrok' {  
     
@@ -12,4 +11,3 @@ declare module 'ngrok' {
 
     export = ngrok;
 }
-
