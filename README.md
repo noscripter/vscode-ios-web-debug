@@ -36,7 +36,7 @@ The VS Code iOS Web Debugger allows to debug your JavaScript code running in Saf
 Before you use the debugger you need to make sure you have the [latest version of iTunes](http://www.apple.com/itunes/download/) installed, as we need a few libraries provided by iTunes to talk to the iOS devices.
 
 #### Windows
-Nothing/ to do as there is a proxy included with the extension from the `vs-libimobile` npm package
+Nothing to do as there is a proxy included with the extension from the `vs-libimobile` npm package
 
 #### OSX/Mac
 Make sure you have Homebrew installed, and run the following command to install [ios-webkit-debug-proxy](https://github.com/google/ios-webkit-debug-proxy)
@@ -49,7 +49,7 @@ brew install ios-webkit-debug-proxy
 
 When your launch config is set up, you can debug your project! Pick a launch config from the dropdown on the Debug pane in Code. Press the play button or F5 to start.
 
-### Configuration 
+### Configuration
 
 The extension operates in two modes - it can `launch` a URL in Safari on the device, or it can `attach` to a running tab inside Safari. Just like when using the Node debugger, you configure these modes with a `.vscode/launch.json` file in the root directory of your project. You can create this file manually, or Code will create one for you if you try to run your project, and it doesn't exist yet.
 
@@ -115,7 +115,7 @@ An example `launch.json` config.
 
 
 ## Troubleshooting
-Please have a look at [vscode-chrome-debug-core](https://github.com/Microsoft/vscode-chrome-debug-core/) for additional troubleshooting and options.
+Please have a look at [vscode-chrome-debug](https://github.com/Microsoft/vscode-chrome-debug/) for additional troubleshooting and options.
 
 ===
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
