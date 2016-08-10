@@ -36,11 +36,11 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
         
         if (tunnelPort) {
             launchPromise = new Promise((resolve, reject) => {
-                logger.log('Launching localtunnel against port ' + tunnelPort);
+                logger.log('Launching ngrok against port ' + tunnelPort);
                 ngrok.connect(tunnelPort, (err: Error, url: string) => {
                     // Navigate the to the given tunneled url
                     if (err) {
-                        logger.error('Failed to launch localtunnel.');
+                        logger.error('Failed to launch ngrok.');
                         return utils.errP(err);
                     }
 
