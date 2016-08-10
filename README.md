@@ -1,7 +1,7 @@
 
 <h1 align="center">
   <br>
-    <img src=".readme/icon.png" alt="logo" width="200">
+    <img src="https://cdn.rawgit.com/Microsoft/vscode-ios-web-debug/master/.readme/icon.png" alt="logo" width="200">
   <br>
   VS Code - Debugger for iOS Web
   <br>
@@ -17,7 +17,7 @@
 
 The VS Code iOS Web Debugger allows to debug your JavaScript code running in Safari on iOS devices (and iOS Simulators) from VS Code both on **Windows and Mac** without addtional tools.
 
-![](.readme/demo.gif)
+![](https://cdn.rawgit.com/Microsoft/vscode-ios-web-debug/master/.readme/demo.gif)
 
 **Supported features**
 * Setting breakpoints, including in source files when source maps are enabled
