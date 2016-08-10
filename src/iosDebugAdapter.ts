@@ -45,10 +45,8 @@ export class IOSDebugAdapter extends ChromeDebugAdapter {
                     }
 
                     logger.log('Success.' + tunnelPort);
-
                     this._hasLocalTunnel = true;
 
-                
                     // Set the store member and listen for any errors
                     ngrok.once('error', (err) => {
                         logger.log('Tunneling proxy error: ' + err);
