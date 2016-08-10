@@ -19,7 +19,7 @@
     "license": "SEE LICENSE IN LICENSE.txt",
     "dependencies": {
         "vscode-chrome-debug-core": "0.1.16",
-        "localtunnel": "1.8.1"
+        "ngrok": "^2.2.2"
     },
     "optionalDependencies": {
         "vs-libimobile": "^0.0.3"
