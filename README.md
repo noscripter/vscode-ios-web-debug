@@ -26,6 +26,7 @@ The VS Code iOS Web Debugger allows to debug your JavaScript code running in Saf
 * Debugging eval scripts, script tags, and scripts that are added dynamically
 * Watches
 * Console
+* Virtual port forwarding via HTTP tunnel from local computer.
 
 **Unsupported scenarios**
 * Debugging web workers
@@ -112,7 +113,7 @@ An example `launch.json` config.
 #### Other optional launch config fields
 * `diagnosticLogging`: When true, the adapter logs its own diagnostic info to the console
 * `deviceName`: The name of the devices, if multiple devices are connected. `*` matches any device.
-
+* `tunnelPort`: Port to be tunnel via local HTTP port. Usually the `port` your developer server is running on.
 
 ## Troubleshooting
 Please have a look at [vscode-chrome-debug](https://github.com/Microsoft/vscode-chrome-debug/) for additional troubleshooting and options.
