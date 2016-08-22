@@ -21,8 +21,9 @@ The VS Code iOS Web Debugger allows to debug your JavaScript code running in Saf
 
 **Supported features**
 * Setting breakpoints, including in source files when source maps are enabled
-* Stepping, including with the buttons on the Chrome page
-* The Locals pane
+* Stepping
+* Stack traces
+* Locals
 * Debugging eval scripts, script tags, and scripts that are added dynamically
 * Watches
 * Console
